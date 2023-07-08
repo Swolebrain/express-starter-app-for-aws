@@ -1,11 +1,14 @@
 import express from 'express';
+import { awsMetrics } from './middelwares/aws-metrics.js';
 
 const app = express();
 
-app.get('/', (_req, res) => {
-    res.status(200).send(`
-    Hello world.
-    Environment: ${process.env.NODE_ENV}
+app.use(awsMetrics);
+
+app.get('/', (_req, res): void => {
+    res.send(`
+    <h3>${process.env.APP_NAME} is working. This is ${process.env.NODE_ENV} env</h3>
+    <span>${new Date().toISOString()}</span>
     `);
 });
 
