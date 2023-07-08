@@ -1,6 +1,6 @@
 
 const env = {
-  NODE_ENV: process.env.NODE_ENV || "DEV",
+  NODE_ENV: process.env.NODE_ENV || 'dev',
   APP_NAME: process.env.APP_NAME || 'express-starter-app-for-aws',
 }
 
