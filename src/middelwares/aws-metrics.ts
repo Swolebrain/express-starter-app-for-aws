@@ -1,5 +1,4 @@
-import { Configuration, MetricsLogger, Unit } from 'aws-embedded-metrics';
-import { resolveEnvironment } from 'aws-embedded-metrics/lib/environment/EnvironmentDetector.js';
+import { Configuration, Unit, createMetricsLogger } from 'aws-embedded-metrics';
 import { NextFunction, Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { getDurationInMilliseconds } from '../utils.js';
@@ -9,7 +8,7 @@ Configuration.serviceType = 'NodeJS';
 Configuration.debuggingLoggingEnabled = true;
 
 export const awsMetrics = (req: Request, res: Response, next: NextFunction) => {
-    const metrics = new MetricsLogger(resolveEnvironment);
+    const metrics = createMetricsLogger();
 
     const startTime = process.hrtime();
     const appName = process.env.APP_NAME;
