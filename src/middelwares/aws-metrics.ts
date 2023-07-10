@@ -5,7 +5,6 @@ import { getDurationInMilliseconds } from '../utils.js';
 
 Configuration.serviceName = process.env.APP_NAME;
 Configuration.serviceType = 'NodeJS';
-Configuration.debuggingLoggingEnabled = true;
 
 export const awsMetrics = (req: Request, res: Response, next: NextFunction) => {
     const metrics = createMetricsLogger();
@@ -47,10 +46,7 @@ export const awsMetrics = (req: Request, res: Response, next: NextFunction) => {
             metrics.putMetric('5XX', 1, Unit.Count);
         }
 
-        metrics
-            .flush()
-            .then(() => console.log('metrics put successfully'))
-            .catch((e) => console.log('error flushing metrics', e));
+        metrics.flush().catch((e) => console.log('error flushing metrics', e));
     });
 
     next();
