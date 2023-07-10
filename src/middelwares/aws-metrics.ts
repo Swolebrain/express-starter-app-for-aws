@@ -5,6 +5,8 @@ import { NextFunction, Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { getDurationInMilliseconds } from '../utils.js';
 
+Configuration.serviceName = process.env.APP_NAME;
+Configuration.serviceType = 'NodeJS';
 Configuration.debuggingLoggingEnabled = true;
 
 export const awsMetrics = (req: Request, res: Response, next: NextFunction) => {
