@@ -1,9 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
-import { MetricsLogger, Unit } from 'aws-embedded-metrics';
+import { Configuration, MetricsLogger, Unit } from 'aws-embedded-metrics';
 import { LocalEnvironment } from 'aws-embedded-metrics/lib/environment/LocalEnvironment.js';
 import { MetricsContext } from 'aws-embedded-metrics/lib/logger/MetricsContext.js';
+import { NextFunction, Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 import { getDurationInMilliseconds } from '../utils.js';
+
+Configuration.debuggingLoggingEnabled = true;
 
 export const awsMetrics = (req: Request, res: Response, next: NextFunction) => {
     const context = MetricsContext.empty();
@@ -47,7 +49,10 @@ export const awsMetrics = (req: Request, res: Response, next: NextFunction) => {
             metrics.putMetric('5XX', 1, Unit.Count);
         }
 
-        metrics.flush().catch((e) => console.log('error flushing metrics', e));
+        metrics
+            .flush()
+            .then(() => console.log('metrics put successfully'))
+            .catch((e) => console.log('error flushing metrics', e));
     });
 
     next();
