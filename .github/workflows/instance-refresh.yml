@@ -21,4 +21,4 @@ jobs:
 
             - name: AWS CLI Instance Refresh Command
               run: |
-                  aws start-instance-refresh --auto-scaling-group-name ${{ env.AWS_ASG_NAME }}
+                  aws autoscaling start-instance-refresh --auto-scaling-group-name ${{ env.AWS_ASG_NAME }}
